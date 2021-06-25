@@ -14,6 +14,7 @@ using System.Net;
 using System.IO;
 using Microsoft.AspNet.Identity;
 using System.Net.Mail;
+using WebApplication2.Models;
 
 namespace WebApplication2.Views
 {
@@ -77,8 +78,8 @@ namespace WebApplication2.Views
 
             }
 
-
-            POs pos = new POs
+            POsDBContext pOsDBContext = new POsDBContext();
+            PurchaseOrderModel pos = new PurchaseOrderModel
             {
                 DealerName = TextBox1.Text,
                 DealerPONumber = TextBox2.Text,
@@ -92,8 +93,8 @@ namespace WebApplication2.Views
 
             };
 
-            pos.PurchaseOrders.Add(pos);
-            pos.SaveChanges();
+            pOsDBContext.PurchaseOrders.Add(pos);
+            pOsDBContext.SaveChanges();
         }
 
       

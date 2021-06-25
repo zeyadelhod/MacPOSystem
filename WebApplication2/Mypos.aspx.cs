@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebApplication2.DAL;
+using WebApplication2.Models;
 
 namespace WebApplication2
 {
@@ -16,9 +17,9 @@ namespace WebApplication2
             {
                 GridView GridView1 = (GridView)LoginView1.FindControl("GridView1");
 
-                POs pos = new POs();
+                POsDBContext pos = new POsDBContext();
                
-                List<POs> PurchaseOrders = pos.PurchaseOrders.ToList().Where(s => s.UserID == User.Identity.Name).ToList();
+                List<PurchaseOrderModel> PurchaseOrders = pos.PurchaseOrders.ToList().Where(s => s.UserID == User.Identity.Name).ToList();
              
                 GridView1.DataSource = PurchaseOrders;
                 if (!IsPostBack)

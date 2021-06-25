@@ -194,7 +194,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="DAL\POs.cs" />
+    <Compile Include="DAL\POsDBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -222,6 +222,7 @@
     <Compile Include="AlfemoPOs.aspx.designer.cs">
       <DependentUpon>AlfemoPOs.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PurchaseOrderModel.cs" />
     <Compile Include="Mypos.aspx.cs">
       <DependentUpon>Mypos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services;
 using WebApplication2.DAL;
+using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
@@ -28,16 +30,24 @@ namespace WebApplication2.Controllers
             return View();
         }
 
-        // GET api/values
-
-        public List<POs> Get()
+        [HttpGet]
+        public List<PurchaseOrderModel> Get()
         {
-            POs pos = new POs();
+            POsDBContext pos = new POsDBContext();
 
-            //   List<Incident> SameUserIncidents = incidentsContext.Incidents.ToList().Where(x => incident.AndroidID == x.AndroidID).ToList();
+          List<PurchaseOrderModel> SameUserIncidents = pos.PurchaseOrders.ToList().Where(x =>x.DealerName != "test").ToList();
 
+         //   return Json(incidentsContext.Incidents.ToList(), JsonRequestBehavior.AllowGet);
 
-            return pos.PurchaseOrders.ToList();
+            return SameUserIncidents;
+        }
+
+        [WebMethod]
+        public JsonResult GetAllPOs()
+        {
+            POsDBContext pos = new POsDBContext();
+           return Json(pos.PurchaseOrders.ToList(), JsonRequestBehavior.AllowGet);
+
         }
     }
 }

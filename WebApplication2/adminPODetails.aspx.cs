@@ -8,26 +8,26 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebApplication2.DAL;
+using WebApplication2.Models;
 
 namespace WebApplication2
 {
     public partial class adminPODetails : System.Web.UI.Page
     {
         string ID;
-        String FilePath;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (User.Identity.IsAuthenticated)
             {
 
                 ID = Request.QueryString["ID"];
-                POs pos = new POs();
+                POsDBContext pos = new POsDBContext();
 
 
                 GridView GridView1 = (GridView)LoginView1.FindControl("GridView1");
 
 
-                List<POs> PurchaseOrders = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).ToList();
+                List<PurchaseOrderModel> PurchaseOrders = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).ToList();
 
                 GridView1.DataSource = PurchaseOrders;
                 if (!IsPostBack)
@@ -78,9 +78,9 @@ namespace WebApplication2
                 {
                     FileUpload1.PostedFile.SaveAs(strFilePath);
                     Label1.Text =  "PO is created and sent to mack Dis ";
-                    POs pos = new POs();
+                    POsDBContext pos = new POsDBContext();
 
-                    POs selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
+                    PurchaseOrderModel selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
                     selectedpo.MackPOAttach = FileUpload1.FileName;
 
                     pos.SaveChanges();
@@ -104,9 +104,9 @@ namespace WebApplication2
 
         protected void DownloadCorinthianPO(object sender, EventArgs e)
         {
-            POs pos = new POs();
+            POsDBContext pos = new POsDBContext();
 
-            POs selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
+            PurchaseOrderModel selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
             Button btn = (Button)sender;
             String fileName = btn.CommandArgument.ToString();
             DownloadFile(selectedpo.CorinthianPOAttach);
@@ -115,9 +115,9 @@ namespace WebApplication2
         protected void DownloadMackPO(object sender, EventArgs e)
         {
             
-                POs pos = new POs();
+                POsDBContext pos = new POsDBContext();
 
-                POs selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
+            PurchaseOrderModel selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
                 Button btn = (Button)sender;
             String fileName = btn.CommandArgument.ToString();
                 DownloadFile(selectedpo.MackPOAttach);
@@ -128,7 +128,7 @@ namespace WebApplication2
             Button btn = (Button)sender;
 
             String ID = btn.CommandArgument.ToString();
-            POs pos = new POs();
+            POsDBContext pos = new POsDBContext();
 
             pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault().ApprovalStatus = true;
             pos.SaveChanges();
@@ -142,7 +142,7 @@ namespace WebApplication2
             Button btn = (Button)sender;
 
             String ID = btn.CommandArgument.ToString();
-            POs pos = new POs();
+            POsDBContext pos = new POsDBContext();
 
             pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault().ApprovalStatus = false;
             pos.SaveChanges();

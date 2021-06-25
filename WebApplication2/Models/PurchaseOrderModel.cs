@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Data.Entity;
-using WebApplication2.Controllers;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using WebApplication2.Models;
+using WebApplication2.DAL;
 
-namespace WebApplication2.DAL
+namespace WebApplication2.Models
 {
 
-  
 
-    public class POs : DbContext
+    [Table("mackpotracker")]
+
+    public class PurchaseOrderModel
     {
-
-        public POs() : base("POsDBConnectionString")
-        {
-        }
-
         [Key]
         public int ID { get; set; }
         public String DealerName { get; set; }
@@ -56,8 +50,5 @@ namespace WebApplication2.DAL
 
         public String ProductionRequestTime { get; set; }
         public bool ApprovalStatus { get; set; }
-        public DbSet<POs> PurchaseOrders { get; set; }
-
-
     }
 }

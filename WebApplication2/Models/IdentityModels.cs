@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using WebApplication2.DAL;
 
 namespace WebApplication2.Models
 {
@@ -12,7 +11,7 @@ namespace WebApplication2.Models
     {
         public string CompanyName { get; set; }
 
-        public POs pos { get; set; }
+        public PurchaseOrderModel POMOdel { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebApplication2.DAL;
+using WebApplication2.Models;
 
 namespace WebApplication2
 {
@@ -19,8 +20,8 @@ namespace WebApplication2
             {
                 GridView GridView1 = (GridView)LoginView1.FindControl("GridView1");
 
-                POs pos = new POs();
-                List<POs> PurchaseOrders = pos.PurchaseOrders.ToList();
+                POsDBContext pos = new POsDBContext();
+                List<PurchaseOrderModel> PurchaseOrders = pos.PurchaseOrders.ToList();
                 GridView1.DataSource = PurchaseOrders;
                 if (!IsPostBack)
                 {
@@ -36,7 +37,7 @@ namespace WebApplication2
             Button btn = (Button)sender;
 
             String ID = btn.CommandArgument.ToString();
-            POs pos = new POs();
+            POsDBContext pos = new POsDBContext();
 
             pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault().ApprovalStatus = true;
             pos.SaveChanges();
@@ -63,7 +64,7 @@ namespace WebApplication2
             Button btn = (Button)sender;
 
             String ID = btn.CommandArgument.ToString();
-            POs pos = new POs();
+            POsDBContext pos = new POsDBContext();
 
             pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault().ApprovalStatus = false;
             pos.SaveChanges();

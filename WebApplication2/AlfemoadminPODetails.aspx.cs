@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebApplication2.DAL;
+using WebApplication2.Models;
 
 namespace WebApplication2
 {
@@ -21,7 +22,7 @@ namespace WebApplication2
             {
 
                 ID = Request.QueryString["ID"];
-                POs pos = new POs();
+                POsDBContext pos = new POsDBContext();
 
 
                 if (!Page.IsPostBack)
@@ -29,12 +30,12 @@ namespace WebApplication2
                     // First page access
 
 
-                    List<POs> PurchaseOrders = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).ToList();
+                    List<PurchaseOrderModel> PurchaseOrders = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).ToList();
 
 
                     GridView GridView1 = (GridView)LoginView1.FindControl("GridView1");
 
-                    POs selectedpo = PurchaseOrders.FirstOrDefault();
+                    PurchaseOrderModel selectedpo = PurchaseOrders.FirstOrDefault();
                     selectedpo.Status = DropDownList1.SelectedValue;
                     ContainerNumber.Text = selectedpo.ContainerNumber;
                     FinalDestinatonTB.Text = selectedpo.FinalDestLocation;
@@ -54,9 +55,9 @@ namespace WebApplication2
         }
         protected void UpdateStatus(object sender, EventArgs e)
         {
-            POs pos = new POs();
+            POsDBContext pos = new POsDBContext();
 
-            POs selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
+            PurchaseOrderModel selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
             selectedpo.Status = DropDownList1.SelectedValue;
             selectedpo.ContainerNumber = ContainerNumber.Text;
             selectedpo.FinalDestLocation = FinalDestinatonTB.Text;
@@ -77,9 +78,9 @@ namespace WebApplication2
 
         protected void DownloadCorinthianPO(object sender, EventArgs e)
         {
-            POs pos = new POs();
+            POsDBContext pos = new POsDBContext();
 
-            POs selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
+            PurchaseOrderModel selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
             Button btn = (Button)sender;
             String fileName = btn.CommandArgument.ToString();
             DownloadFile(selectedpo.CorinthianPOAttach);
@@ -88,9 +89,9 @@ namespace WebApplication2
         protected void DownloadMackPO(object sender, EventArgs e)
         {
             
-                POs pos = new POs();
+                POsDBContext pos = new POsDBContext();
 
-                POs selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
+            PurchaseOrderModel selectedpo = pos.PurchaseOrders.ToList().Where(s => s.ID == int.Parse(ID)).FirstOrDefault();
                 Button btn = (Button)sender;
             String fileName = btn.CommandArgument.ToString();
                 DownloadFile(selectedpo.MackPOAttach);
